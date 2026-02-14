@@ -16,16 +16,6 @@ class MyPlugin(Star):
 
     @filter.platform_adapter_type(filter.PlatformAdapterType.AIOCQHTTP)
     async def on_aiocqhttp(self, event: AstrMessageEvent):
-
         msg_chain = event.message_obj.message
 
-        if not msg_chain:
-            return
-
-        seg = msg_chain[0]
-
-        file = await seg.get_file()
-
-        yield event.plain_result(
-            f"文件识别成功：\n{file}"
-        )
+        yield event.plain_result(await msg_chain[0].convert_to_file_path())
