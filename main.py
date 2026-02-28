@@ -1,5 +1,6 @@
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
+from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent
 
 
@@ -18,4 +19,8 @@ class MyPlugin(Star):
     async def on_aiocqhttp(self, event: AstrMessageEvent):
         msg_chain = event.message_obj.message
 
-        yield event.plain_result(await msg_chain[0].convert_to_file_path())
+        # for seg in msg_chain:
+        #     try:
+        #         await event.send(MessageChain().message(seg.url))
+        #     except AttributeError:
+        #         await event.send(MessageChain().message(str(seg)))
